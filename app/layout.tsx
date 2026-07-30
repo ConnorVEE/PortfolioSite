@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Connor VanTress Portfolio",
-  description: "Connor VanTress Portfolio website built with Next.js",
+  title: "Connor VanTress | Software Engineer",
+  description: "Portfolio showcasing software engineering projects, technical skills, and experience."
 };
 
 export default function RootLayout({
