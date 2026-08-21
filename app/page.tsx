@@ -3,6 +3,7 @@ import Hero from "@/components/hero/Hero";
 import About from "@/components/about/About";
 import HowIBuild from "@/components/how-i-build/HowIBuild";
 import Projects from "@/components/projects/Projects";
+import Skills from "@/components/skills/Skills";
 
 export default function Home() {
   return (
@@ -11,12 +12,7 @@ export default function Home() {
       <About />
       <HowIBuild />
       <Projects />
-
-      <section id="skills">
-        <Container>
-          <h2>Skills</h2>
-        </Container>
-      </section>
+      <Skills />
 
       <section id="experience">
         <Container>

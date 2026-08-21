@@ -1,4 +1,5 @@
 import { Project } from "@/data/projects"
+import SkillPill from "../ui/SkillPill"
 
 export default function ProjectCard ({title, description, technologies, githubUrl, liveUrl}: Project) {
     return (
@@ -14,12 +15,9 @@ export default function ProjectCard ({title, description, technologies, githubUr
 
                 <div className="flex flex-wrap gap-2">
                     {technologies.map((technology) => (
-                        <span
-                            key={technology}
-                            className="rounded-full border border-secondary px-3 py-1 text-sm text-secondary"
-                        >
+                        <SkillPill key={technology}>
                             {technology}
-                        </span>
+                        </SkillPill>
                     ))}
                 </div>
 
