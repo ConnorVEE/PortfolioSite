@@ -4,6 +4,8 @@ import About from "@/components/about/About";
 import HowIBuild from "@/components/how-i-build/HowIBuild";
 import Projects from "@/components/projects/Projects";
 import Skills from "@/components/skills/Skills";
+import Experience from "@/components/experience/Experience";
+import Contact from "@/components/contact/Contact";
 
 export default function Home() {
   return (
@@ -13,18 +15,8 @@ export default function Home() {
       <HowIBuild />
       <Projects />
       <Skills />
-
-      <section id="experience">
-        <Container>
-          <h2>Experience</h2>
-        </Container>
-      </section>
-
-      <section id="contact">
-        <Container>
-          <h2>Contact</h2>
-        </Container>
-      </section>
+      <Experience />
+      <Contact />
     </main>
   );
 }
