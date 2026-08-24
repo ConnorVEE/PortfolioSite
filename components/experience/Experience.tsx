@@ -8,7 +8,7 @@ export default function Experience () {
             <Container>
                 <h2 className="text-2xl font-bold text-primary md:text-3xl py-4">Experience</h2>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-8">
                     
                     {experience.map((job) => (
                         <CompanyExperience

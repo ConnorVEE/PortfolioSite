@@ -2,7 +2,7 @@ import { PositionType } from "@/data/experience";
 
 export default function Position ({title, startDate, endDate, duration, location, responsibilities}: PositionType) {
     return (
-        <div className="flex flex-col gap-4 p-4">
+        <div className="relative flex flex-col gap-2">
             <h4 className="text-lg font-bold text-primary md:text-xl">{title}</h4>
 
             <div className="flex flex-col">
