@@ -7,12 +7,25 @@ export default function Contact () {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(name)
-        console.log(email)
-        console.log(message)
-    }
+    
+        const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name,
+                email,
+                message,
+            }),
+        });
+    
+        const data = await response.json();
+    
+        console.log(data);
+    };
 
     return (
         <section id="contact" className="py-18">
@@ -68,33 +81,48 @@ export default function Contact () {
                             
                             <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
 
-                                <label>
+                                <label
+                                htmlFor="name" 
+                                className="font-medium font-secondary flex flex-col gap-2" 
+                                >
                                     Name
                                     <input 
-                                    className="flex flex-col gap-2 w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
+                                    id="name"
+                                    required
+                                    className="w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     type="text" 
                                     value={name} 
                                     onChange={(e) => setName(e.target.value)} 
                                     />
                                 </label>
 
-                                <label>
+                                <label
+                                htmlFor="email" 
+                                className="font-medium font-secondary flex flex-col gap-2" 
+                                >
                                     Email
-                                    <input 
+                                    <input
+                                    id="email"
+                                    required 
                                     type="email" 
                                     value={email} 
                                     onChange={(e) => setEmail(e.target.value)} 
-                                    className="flex flex-col gap-2 w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
+                                    className="w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     />
                                 </label>
 
-                                <label>
+                                <label 
+                                htmlFor="message"
+                                className="font-medium font-secondary flex flex-col gap-2" 
+                                >
                                     Message
                                     <textarea
+                                        id="message"
+                                        required
                                         name="message"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
-                                        className="flex flex-col gap-2 w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
+                                        className="w-full min-h-32 p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     />
                                 </label>
 
