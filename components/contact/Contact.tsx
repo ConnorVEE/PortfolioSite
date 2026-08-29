@@ -6,9 +6,11 @@ export default function Contact () {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [status, setStatus] = useState< "idle" | "sending" | "success" | "error" >("idle");
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setStatus("sending");
     
         const response = await fetch("/api/contact", {
             method: "POST",
