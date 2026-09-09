@@ -8,9 +8,9 @@ export default function Navbar() {
 
   const navItems = [
     { label: "About", href: "#about" },
+    { label: "How I Build", href: "#how-i-build" },
     { label: "Projects", href: "#projects" },
     { label: "Skills", href: "#skills" },
-    { label: "How I Build", href: "#how-i-build" },
     { label: "Experience", href: "#experience" },
     { label: "Contact", href: "#contact" },
   ];

@@ -12,21 +12,33 @@ export default function Contact () {
         e.preventDefault();
         setStatus("sending");
     
-        const response = await fetch("/api/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                message,
-            }),
-        });
-    
-        const data = await response.json();
-    
-        console.log(data);
+        try {
+
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    message,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to submit form");
+            }
+
+            setStatus("success");
+
+            setName("");
+            setEmail("");
+            setMessage("");
+
+        } catch (error) {
+            setStatus("error");
+        }
     };
 
     return (
@@ -130,10 +142,23 @@ export default function Contact () {
 
                                 <button
                                     type="submit"
+                                    disabled={status === "sending"}
                                     className="self-start px-6 py-1 rounded-xl border-2 border-primary bg-primary p-2 text-lg text-surface transition-colors hover:bg-accent hover:border-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                                 >
-                                    Submit
+                                    {status === "sending" ? "Sending..." : "Submit"}
                                 </button>
+
+                                {status === "success" && (
+                                    <p>
+                                        Message sent successfully! Thanks for reaching out.
+                                    </p>
+                                )}
+
+                                {status === "error" && (
+                                    <p>
+                                        Something went wrong. Please try again or contact me directly by email.
+                                    </p>
+                                )}
                             </form>
 
                         </div>
