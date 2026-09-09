@@ -7,10 +7,43 @@ export default function Contact () {
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState< "idle" | "sending" | "success" | "error" >("idle");
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setErrorMessage(null);
         setStatus("sending");
+
+        if (!name.trim() || !email.trim() || !message.trim()) {
+            setErrorMessage("All fields are required");
+            setStatus("error");
+            return;
+        }
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email.trim())) {
+            setErrorMessage("Invalid email address");
+            setStatus("error");
+            return;
+        }
+
+        if (name.length > 30) {
+            setErrorMessage("Name is too long");
+            setStatus("error");
+            return;
+        }
+
+        if (email.length > 40) {
+            setErrorMessage("Email is too long");
+            setStatus("error");
+            return;
+        }
+    
+        if (message.length > 600) {
+            setErrorMessage("Message is too long");
+            setStatus("error");
+            return;
+        }
     
         try {
 
@@ -26,7 +59,10 @@ export default function Contact () {
                 }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
+                setErrorMessage(data.error);
                 throw new Error("Failed to submit form");
             }
 
@@ -93,7 +129,7 @@ export default function Contact () {
 
                         <div className="w-full md:w-1/2 border-t border-secondary md:border-t-0 py-8 md:py-0">
                             
-                            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                            <form className="flex flex-col gap-4" onSubmit={handleSubmit} noValidate>
 
                                 <label
                                 htmlFor="name" 
@@ -106,7 +142,8 @@ export default function Contact () {
                                     className="w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     type="text" 
                                     value={name} 
-                                    onChange={(e) => setName(e.target.value)} 
+                                    onChange={(e) => setName(e.target.value)}
+                                    maxLength={30} 
                                     />
                                 </label>
 
@@ -120,7 +157,8 @@ export default function Contact () {
                                     required 
                                     type="email" 
                                     value={email} 
-                                    onChange={(e) => setEmail(e.target.value)} 
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    maxLength={40} 
                                     className="w-full p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     />
                                 </label>
@@ -136,6 +174,7 @@ export default function Contact () {
                                         name="message"
                                         value={message}
                                         onChange={(e) => setMessage(e.target.value)}
+                                        maxLength={600}
                                         className="w-full min-h-32 p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     />
                                 </label>
@@ -155,8 +194,8 @@ export default function Contact () {
                                 )}
 
                                 {status === "error" && (
-                                    <p>
-                                        Something went wrong. Please try again or contact me directly by email.
+                                    <p className="text-red-500">
+                                        Error: {errorMessage}! Please try again or contact me directly by email
                                     </p>
                                 )}
                             </form>
