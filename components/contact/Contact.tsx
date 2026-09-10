@@ -6,6 +6,7 @@ export default function Contact () {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [message, setMessage] = useState("");
+    const [website, setWebsite] = useState("");
     const [status, setStatus] = useState< "idle" | "sending" | "success" | "error" >("idle");
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -13,6 +14,14 @@ export default function Contact () {
         e.preventDefault();
         setErrorMessage(null);
         setStatus("sending");
+        
+        if (website) {
+            setStatus("success");
+            setName("");
+            setEmail("");
+            setMessage("");
+            return;
+        }
 
         if (!name.trim() || !email.trim() || !message.trim()) {
             setErrorMessage("All fields are required");
@@ -178,6 +187,18 @@ export default function Contact () {
                                         className="w-full min-h-32 p-2 border-2 border-secondary rounded focus:outline-none focus:ring-accent focus:border-accent"
                                     />
                                 </label>
+
+                                {/* Honeypot field - Hidden from human users */}
+                                <div className="hidden" aria-hidden="true">
+                                    <input
+                                        type="text"
+                                        name="website"
+                                        tabIndex={-1}
+                                        autoComplete="off"
+                                        value={website}
+                                        onChange={(e) => setWebsite(e.target.value)}
+                                    />
+                                </div>
 
                                 <button
                                     type="submit"
