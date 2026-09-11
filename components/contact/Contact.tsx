@@ -83,6 +83,9 @@ export default function Contact () {
 
         } catch (error) {
             setStatus("error");
+            setErrorMessage(
+                error instanceof Error ? error.message : "An unexpected error occurred"
+            );
         }
     };
 
