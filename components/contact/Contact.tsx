@@ -119,6 +119,8 @@ export default function Contact () {
 
                             <a 
                             href="https://www.linkedin.com/in/connor-vantress"
+                            target="_blank" 
+                            rel="noopener"
                             className="text-lg text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             >
                                 LinkedIn →
@@ -126,13 +128,18 @@ export default function Contact () {
 
                             <a 
                             href="https://github.com/ConnorVEE"
+                            target="_blank" 
+                            rel="noopener"
                             className="text-lg text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             >
                                 Github →
                             </a>
 
                             <a
-                            href={""}
+                            href="/documents/ConnorVanTress_Resume.pdf"
+                            download="ConnorVanTress_Resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-lg text-secondary transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             >
                                 Resume ↓
