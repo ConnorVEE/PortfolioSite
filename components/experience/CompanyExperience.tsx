@@ -1,7 +1,9 @@
 import Position from "./Position"
-import { ExperienceType } from "@/data/experience";
+import { ExperienceType, getCompanyDuration } from "@/data/experience";
 
-export default function CompanyExperience ({company, employmentType, totalDuration, positions}: ExperienceType) {
+export default function CompanyExperience ({company, employmentType, positions}: ExperienceType) {
+    const totalDuration = getCompanyDuration(positions);
+
     return (
         <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-1">

@@ -1,8 +1,7 @@
 export type PositionType = {
     title: string;
     startDate: string;
-    endDate: string;
-    duration: string;
+    endDate?: string;
     location: string;
     responsibilities: string[];
   };
@@ -10,21 +9,49 @@ export type PositionType = {
   export type ExperienceType = {
     company: string;
     employmentType: string;
-    totalDuration: string;
     positions: PositionType[];
   };
+
+  // 1. Core duration calculator
+export function calculateDuration(startDateStr: string, endDateStr?: string): string {
+  const start = new Date(startDateStr);
+  const end = endDateStr ? new Date(endDateStr) : new Date();
+
+  let totalMonths =
+    (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+
+  totalMonths += 1; // Include starting month
+
+  if (totalMonths <= 0) return "1 mo";
+
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+
+  const yearStr = years > 0 ? `${years} ${years === 1 ? "yr" : "yrs"}` : "";
+  const monthStr = months > 0 ? `${months} ${months === 1 ? "mo" : "mos"}` : "";
+
+  return [yearStr, monthStr].filter(Boolean).join(" ");
+}
+
+// 2. Company-wide duration calculator
+export function getCompanyDuration(positions: PositionType[]): string {
+  if (!positions || !positions.length) return "";
+
+  const earliestStart = positions[positions.length - 1].startDate;
+  const hasCurrentPosition = positions.some((p) => !p.endDate);
+  const latestEnd = hasCurrentPosition ? undefined : positions[0].endDate;
+
+  return calculateDuration(earliestStart, latestEnd);
+}
 
   export const experience: ExperienceType[] = [
     {
       company: "Starbucks",
       employmentType: "Part-time",
-      totalDuration: "4 yrs 3 mos",
       positions: [
         {
           title: "Shift Supervisor",
           startDate: "Oct 2025",
-          endDate: "Present",
-          duration: "11 mos",
           location: "Kennesaw, Georgia, United States",
           responsibilities: [
             "I lead my team of partners to deliver an exceptional customer experience while meeting production and operational goals",
@@ -38,7 +65,6 @@ export type PositionType = {
           title: "Barista",
           startDate: "June 2022",
           endDate: "Oct 2025",
-          duration: "3 yrs 5 mos",
           location: "Georgia, United States",
           responsibilities: [
             "Craft and prepare drinks and food to the specifications of customers",

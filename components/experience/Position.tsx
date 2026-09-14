@@ -1,12 +1,13 @@
-import { PositionType } from "@/data/experience";
+import { PositionType, calculateDuration } from "@/data/experience";
 
-export default function Position ({title, startDate, endDate, duration, location, responsibilities}: PositionType) {
+export default function Position ({title, startDate, endDate, location, responsibilities}: PositionType) {
+
     return (
         <div className="relative flex flex-col gap-2">
             <h4 className="text-lg font-bold text-primary md:text-xl">{title}</h4>
 
             <div className="flex flex-col">
-                <span>{startDate} - {endDate} · {duration}</span>
+                <span>{startDate} – {endDate ?? "Present"} · {calculateDuration(startDate, endDate)}</span>
                 <span>{location}</span>
             </div>
 
