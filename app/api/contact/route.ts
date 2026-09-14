@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     if (!success) {
         return Response.json(
-            { error: "Too many requests. Please try again in an hour." },
+            { error: "Too many requests. Please try again in an hour" },
             {
                 status: 429, // HTTP 429: Too Many Requests
                 headers: {
@@ -27,7 +27,17 @@ export async function POST(request: Request) {
     }
 
     // 2. Form validation
-    const { name, email, message } = await request.json();
+    let body;
+    try {
+        body = await request.json();
+    } catch (error) {
+        return Response.json(
+            { error: "Invalid JSON format in request body." },
+            { status: 400 }
+        );
+    }
+
+    const { name, email, message } = body;
 
     if (
         typeof name !== "string" ||

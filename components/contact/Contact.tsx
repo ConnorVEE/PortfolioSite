@@ -71,8 +71,7 @@ export default function Contact () {
             const data = await response.json();
 
             if (!response.ok) {
-                setErrorMessage(data.error);
-                throw new Error("Failed to submit form");
+                throw new Error(data.error || "Failed to submit form");
             }
 
             setStatus("success");
@@ -226,7 +225,7 @@ export default function Contact () {
 
                                 {status === "error" && (
                                     <p className="text-red-500">
-                                        Error: {errorMessage}! Please try again or contact me directly by email
+                                        Error: {errorMessage}!
                                     </p>
                                 )}
                             </form>
