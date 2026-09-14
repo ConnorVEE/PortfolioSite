@@ -42,7 +42,7 @@ export default function Navbar() {
             
           </div>
 
-          <button
+          {/* <button
             className="md:hidden"
             type="button"
             aria-label="Toggle navigation menu"
@@ -50,26 +50,47 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
           >
             ☰
+          </button> */}
+          <button
+            type="button"
+            className="p-2 text-secondary hover:text-primary md:hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={isOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? "✕" : "☰"}                                                    
           </button>
 
         </div>
 
-        {isOpen && (
-          <div className="flex flex-col gap-4 border-t border-border py-4 md:hidden">
+        <div
+          id="mobile-menu" // ADDED: ID for aria-controls
+          className={`grid transition-[grid-template-rows,opacity] duration-300 ease-in-out md:hidden ${
+            isOpen
+              ? "grid-rows-[1fr] opacity-100 border-t border-border"
+              : "grid-rows-[0fr] opacity-0 border-t-0"
+          }`}
+        >
 
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className="py-2 text-secondary"
-              >
-                {item.label}
-              </a>
-            ))}
+          <div className="overflow-hidden">
+
+            <div className="flex flex-col gap-1 pb-4 pt-2">
+              {navItems.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="py-2 text-secondary"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
 
           </div>
-        )}
+
+        </div>
 
       </Container>
 
