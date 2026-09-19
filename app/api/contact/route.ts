@@ -107,9 +107,10 @@ export async function POST(request: Request) {
 
     // 3. Send email
     const { data, error } = await resend.emails.send({
-        from: "Portfolio <onboarding@resend.dev>",  // This email will change once we aquire a real domain for the website
+        from: "Connor VanTress <contact@connorvantress.com>",
         to: ["11cvantress@gmail.com"],
         subject: `Portfolio Contact: ${name}`,
+        replyTo: `${cleanEmail}`,
         html: `
             <h2>New portfolio contact</h2>
             <p><strong>Name:</strong> ${cleanName}</p>
