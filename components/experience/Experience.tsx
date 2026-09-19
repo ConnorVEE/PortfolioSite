@@ -15,7 +15,6 @@ export default function Experience () {
                             key={job.company}
                             company={job.company}
                             employmentType={job.employmentType}
-                            totalDuration={job.totalDuration}
                             positions={job.positions} 
                         />
                     ))}

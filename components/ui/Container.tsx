@@ -4,7 +4,7 @@ type ContainerProps = {
   
   export default function Container({ children }: ContainerProps) {
     return (
-      <div className="mx-auto w-full max-w-[1200px] px-6">
+      <div className="mx-auto w-full max-w-300 px-6">
         {children}
       </div>
     );

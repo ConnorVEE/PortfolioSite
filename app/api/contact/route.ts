@@ -3,6 +3,20 @@ import { contactRateLimit } from "@/lib/ratelimit";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+// HTML 
+function htmlEscape(str: string): string {
+    const map: Record<string, string> = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#x27;',
+        '/': '&#x2F;',
+    };
+
+    return str.replace(/[&<>"'/]/g, (character) => map[character]);
+}
+ 
 export async function POST(request: Request) {
     // 1. Rate limiting
     const ip =
@@ -50,6 +64,10 @@ export async function POST(request: Request) {
         );
     }
 
+    const cleanName = htmlEscape(name || '');
+    const cleanEmail = htmlEscape(email || '');
+    const cleanMessage = htmlEscape(message || '');
+
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if (!emailPattern.test(email)) {
@@ -59,28 +77,28 @@ export async function POST(request: Request) {
         );
     }
 
-    if (!name.trim() || !email.trim() || !message.trim()) {
+    if (!cleanName.trim() || !cleanEmail.trim() || !cleanMessage.trim()) {
         return Response.json(
             { error: "All fields are required" },
             { status: 400 }
         );
     }
     
-    if (name.length > 40) {
+    if (cleanName.length > 60) {
         return Response.json(
             { error: "Name is too long" },
             { status: 400 }
         );
     }
 
-    if (email.length > 50) {
+    if (cleanEmail.length > 70) {
         return Response.json(
             { error: "Email is too long" },
             { status: 400 }
         );
     }
 
-    if (message.length > 600) {
+    if (cleanMessage.length > 700) {
         return Response.json(
             { error: "Message is too long" },
             { status: 400 }
@@ -94,10 +112,10 @@ export async function POST(request: Request) {
         subject: `Portfolio Contact: ${name}`,
         html: `
             <h2>New portfolio contact</h2>
-            <p><strong>Name:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Name:</strong> ${cleanName}</p>
+            <p><strong>Email:</strong> ${cleanEmail}</p>
             <p><strong>Message:</strong></p>
-            <p>${message}</p>
+            <p>${cleanMessage}</p>
         `,
     });
 

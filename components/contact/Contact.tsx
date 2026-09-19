@@ -219,7 +219,7 @@ export default function Contact () {
 
                                 {status === "success" && (
                                     <p>
-                                        Message sent successfully! Thanks for reaching out.
+                                        Message sent successfully! Thank you for reaching out
                                     </p>
                                 )}
 

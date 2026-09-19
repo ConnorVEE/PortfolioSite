@@ -16,7 +16,15 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Connor VanTress | Software Engineer",
-  description: "Portfolio showcasing software engineering projects, technical skills, and experience."
+  description: "Portfolio showcasing software engineering projects, technical skills, and experience.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
