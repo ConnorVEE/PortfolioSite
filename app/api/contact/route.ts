@@ -110,7 +110,7 @@ export async function POST(request: Request) {
         from: "Connor VanTress <contact@connorvantress.com>",
         to: ["11cvantress@gmail.com"],
         subject: `Portfolio Contact: ${name}`,
-        replyTo: `${cleanEmail}`,
+        replyTo: cleanEmail,
         html: `
             <h2>New portfolio contact</h2>
             <p><strong>Name:</strong> ${cleanName}</p>
